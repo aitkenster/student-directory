@@ -1,32 +1,43 @@
 #printing method
 def print_header
-	 print_str("The students of my cohort at Makers Academy\n============")
+	 puts("The students of my cohort at Makers Academy\n============")
 end
 
 def print_footer
-	print_str("Overall we have #{count_students} great student#{plural_students}")
+	puts "Overall " + print_student_total 
 end
 
-def print_str(string)
-	puts string
+#counts the students
+def count_students
+	students.length
+end
+
+def plural_students
+	count_students > 1 ? "s" : ""
+end
+
+def print_student_total
+	"we have #{count_students} great student#{plural_students}"
+end
+
+# print student directory details
+
+def print_update_status
+	puts "Now " + print_student_total
+end
+
+def print_student(name, cohort, nationality)
+	puts("#{name} (#{cohort} cohort) from #{nationality}")
 end
 
 def print_req_for_student_name
-	print_str("Please enter the names of the students\nTo finish, just hit return twice")
-end
-
-def print_update_status
-	print_str("Now we have #{count_students} student#{plural_students}")
+	puts("Please enter the names of the students\nTo finish, just hit return twice")
 end
 
 def print_students
 	students.each do |student| 
-		print_student(student[:name], student[:cohort])
+		print_student(student[:name], student[:cohort], student[:nationality])
 	end
-end
-
-def print_student(name, cohort)
-	print_str("#{name} (#{cohort} cohort)")
 end
 
 def print_on_exit
@@ -35,9 +46,7 @@ def print_on_exit
 	print_footer
 end
 
-def plural_students
-	count_students > 1 ? "s" : ""
-end
+
 
 #user input methods
 
@@ -45,35 +54,16 @@ def take_user_input
 	gets.chomp
 end
 
+def ask_for_detail
+	"Please enter the student's "
+end
+
 def ask_for_cohort
-	puts "Please enter the student's cohort"
+	puts ask_for_detail + "cohort"
 end
 
-def assign_cohort
-	@cohort = gets
-end
-
-def save_student_name_to_hash(name, cohort)
-	cohort_value = set_default_cohort_value(cohort)
-	{:name => name, :cohort => cohort_value}
-end
-
-def save_student_cohort_to_hash(cohort)
-	{:cohort => cohort}
-end
-
-def set_default_cohort_value(cohort)
-	return "june" if cohort.empty?
-	cohort
-end
-
-def update_student_array(name, cohort = "june")
-	students << save_student_name_to_hash(name, cohort)
-	print_update_status
-end
-
-def count_students
-	students.length
+def ask_for_nationality
+	puts ask_for_detail + "nationality"
 end
 
 def students 
@@ -87,9 +77,11 @@ def input_students
 	while !name.empty? do
 		ask_for_cohort
 		cohort = take_user_input
+		ask_for_nationality
+		nationality = take_user_input
 		print_req_for_student_name
 
-		update_student_array(name, cohort)
+		update_student_array(name, cohort, nationality)
 		print_req_for_student_name
 		name = take_user_input
 
@@ -98,6 +90,28 @@ def input_students
 	print_on_exit
 
 end
+
+# save input into the stuent array
+
+
+def update_student_array(name, cohort = "june", nationality)
+	students << save_student_name_to_hash(name, cohort, nationality)
+	print_update_status
+end
+
+def set_default_cohort_value(cohort)
+	return "june" if cohort.empty?
+	cohort
+end
+
+def save_student_name_to_hash(name, cohort, nationality)
+	cohort_value = set_default_cohort_value(cohort)
+	{:name => name, :cohort => cohort_value, :nationality => nationality}
+end
+
+
+
+
 
 #input_students
 #irset_default_cohort_value("")
