@@ -1,3 +1,4 @@
+#printing method
 def print_header
 	 print_str("The students of my cohort at Makers Academy\n============")
 end
@@ -38,12 +39,27 @@ def plural_students
 	count_students > 1 ? "s" : ""
 end
 
+#user input methods
+
 def take_user_input
 	gets.chomp
 end
 
+def ask_for_cohort
+	puts "Please enter the student's cohort"
+end
+
+def assign_cohort
+	@cohort = gets
+end
+
 def save_student_name_to_hash(name, cohort=:june)
-	{:name => name, cohort: cohort}
+	{:name => name, :cohort => cohort}
+end
+
+def save_student_cohort_to_hash(cohort)
+	{:cohort => cohort}
+
 end
 
 def update_student_array(name, cohort=:june)
@@ -64,16 +80,18 @@ def input_students
 	name = take_user_input
 	
 	while !name.empty? do
+		cohort = take_user_input
 		print_req_for_user_input
-		update_student_array(name)
+
+		update_student_array(name, cohort)
 
 		name = take_user_input
-	end
-		
+
+	end	
+
 	print_on_exit
-
+	
 end
-
 
 
 

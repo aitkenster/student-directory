@@ -2,8 +2,6 @@ require 'directory-TDD'
 
 describe 'student directory' do
 
-#removes surplus lines
-		it 'removes surplus' do
 		before(:each) do
 			allow(self).to receive(:puts)
 		end
@@ -84,6 +82,17 @@ describe 'student directory' do
 			expect(take_user_input).to eq "Jeremy"
 		end
 		
+		it 'asks for a cohort' do
+			expect(self).to receive(:puts).with("Please enter the student's cohort")
+			ask_for_cohort
+		end
+		
+		it 'when a cohort is inputted, saves it to the student hash' do
+			expect(self).to receive(:take_user_input).and_return("Jeremy", "June", "")
+			input_students
+			expect(students.include?({:name => "Jeremy", :cohort => "June"})).to be true
+		end
+
 		it 'ends student input if user hit return twice' do
 			student_name = ""
 			expect(self).to receive(:gets).and_return(student_name)
@@ -93,7 +102,9 @@ describe 'student directory' do
 
 		it 'continues to ask for user input if names are entered' do
 			student_name = "Jeremy"
-			expect(self).to receive(:gets).and_return(student_name, "")
+			cohort = "June"
+			expect(self).to receive(:gets).and_return(student_name, cohort, "")
+
 			expect(self).to receive(:puts).with("Please enter the names of the students\nTo finish, just hit return twice")
 			input_students
 
@@ -114,18 +125,12 @@ describe 'student directory' do
 			expect(students.include?({:name => student_name, cohort: cohort})).to be true
 		end
 
-		it ' when a name is inputted, saves it to the student array' do
-			expect(self).to receive(:take_user_input).and_return("Jeremy", "")
+		it ' when a name is inputted, saves it to the student hash' do
+			expect(self).to receive(:take_user_input).and_return("Jeremy", "June", "")
 			input_students
-			expect(students.include?({:name => "Jeremy", cohort: :june})).to be true
+			expect(students.include?({:name => "Jeremy", :cohort => "June"})).to be true
 		end
 
-		# it 'does not accept a name input once return has been hit twice' do
-		# 	expect(self).to receive(:take_user_input).and_return("Jeremy", "")
-		# 	expect(self).to not_receive(:take_user_input).and_return("Orange")
-		# 	input_students
-		# 	expect(students.include?({:name => "Orange", cohort: :june})).to be false
-		# end
 	end
 
 	context 'counts the number of students in the array' do
