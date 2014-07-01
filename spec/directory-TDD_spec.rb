@@ -18,10 +18,10 @@ describe 'student directory' do
 			print_str("Hey there!")
 		end
 
-		it 'prints out a request for user input' do
+		it 'prints out a request for student name ' do
 			str = "Please enter the names of the students\nTo finish, just hit return twice"
 			expect(self).to receive(:puts).with(str)
-			print_req_for_user_input
+			print_req_for_student_name
 		end
 
 		it 'prints out the footer with 1 student when there is 1 student' do
@@ -60,10 +60,10 @@ describe 'student directory' do
 		end	
 
 		it 'prints out a list of all students information' do
-			update_student_array("Nicola")
-			update_student_array("Jeremy")
-			expect(self).to receive(:puts).with("Jeremy (june cohort)")
-			expect(self).to receive(:puts).with("Nicola (june cohort)")
+			update_student_array("Jeremy", "june")
+			update_student_array("Nicola", "june")
+			expect(self).to receive(:puts).with("Jeremy (june cohort)"),("Nicola (june cohort)")
+			#expect(self).to receive(:puts).with("Nicola (june cohort)")
 			print_students	
 		end	
 
@@ -91,6 +91,12 @@ describe 'student directory' do
 			expect(self).to receive(:take_user_input).and_return("Jeremy", "June", "")
 			input_students
 			expect(students.include?({:name => "Jeremy", :cohort => "June"})).to be true
+		end
+
+		it 'when a cohort is not inputted, makes the default cohort June' do
+			expect(self).to receive(:take_user_input).and_return("Annabel", "", "")
+			input_students
+			expect(students.include?({:name => "Annabel", :cohort => "june"})).to be true
 		end
 
 		it 'ends student input if user hit return twice' do

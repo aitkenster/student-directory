@@ -11,7 +11,7 @@ def print_str(string)
 	puts string
 end
 
-def print_req_for_user_input
+def print_req_for_student_name
 	print_str("Please enter the names of the students\nTo finish, just hit return twice")
 end
 
@@ -53,16 +53,21 @@ def assign_cohort
 	@cohort = gets
 end
 
-def save_student_name_to_hash(name, cohort=:june)
-	{:name => name, :cohort => cohort}
+def save_student_name_to_hash(name, cohort)
+	cohort_value = set_default_cohort_value(cohort)
+	{:name => name, :cohort => cohort_value}
 end
 
 def save_student_cohort_to_hash(cohort)
 	{:cohort => cohort}
-
 end
 
-def update_student_array(name, cohort=:june)
+def set_default_cohort_value(cohort)
+	return "june" if cohort.empty?
+	cohort
+end
+
+def update_student_array(name, cohort = "june")
 	students << save_student_name_to_hash(name, cohort)
 	print_update_status
 end
@@ -76,22 +81,23 @@ def students
 end
 
 def input_students
-	print_req_for_user_input
+	print_req_for_student_name
 	name = take_user_input
 	
 	while !name.empty? do
+		ask_for_cohort
 		cohort = take_user_input
-		print_req_for_user_input
+		print_req_for_student_name
 
 		update_student_array(name, cohort)
-
+		print_req_for_student_name
 		name = take_user_input
 
 	end	
 
 	print_on_exit
-	
+
 end
 
-
-
+#input_students
+#irset_default_cohort_value("")
