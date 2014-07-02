@@ -50,7 +50,7 @@ end
 
 
 
-#user input methods
+#user iut methods
 
 def take_user_input
 	gets.chomp
