@@ -1,3 +1,5 @@
+require 'CSV'
+
 #printing method
 def print_header
 	 puts("The students of my cohort at Makers Academy\n============")
@@ -109,9 +111,32 @@ def save_student_name_to_hash(name, cohort, nationality)
 	{:name => name, :cohort => cohort_value, :nationality => nationality}
 end
 
+def process selection
+	case selection
+	when '1'
+		input_students
+	when '2'
+		print_on_exit
+	when '9'
+		exit
+	end
+end
 
+def save_to_csv_format(students)
+	student.values
+end
 
+def save_to_file(students)
+	CSV.open('student.csv', 'wb') do |csv|
+		csv << save_to_csv_format(students)
+	end
+end
 
+def read_the_file(filename = "student.csv")
+	CSV.foreach('student.csv') do |row|
+		
+	end
+end
 
 #input_students
 #irset_default_cohort_value("")

@@ -6,6 +6,8 @@ describe 'student directory' do
 			allow(self).to receive(:puts)
 		end
 
+		let (:student) {{name: "Nicola", cohort: "June", nationality: "UK"}}
+
 	context 'prints out required text' do 
 		it 'prints header' do
 			header = "The students of my cohort at Makers Academy\n============"
@@ -133,4 +135,40 @@ describe 'student directory' do
 			expect(count_students).to eq(2)
 		end
 	end
+
+	context 'case selection' do
+		it 'select 1' do
+			selection = '1'
+			expect(self).to receive(:input_students)
+			process(selection)
+		end
+		it 'select 2' do
+			selection = '2'
+			expect(self).to receive(:print_on_exit)
+			process(selection)
+		end
+		it 'select 9' do
+			selection = '9'
+			expect(self).to receive(:exit)
+			process(selection)
+		end
+	end
+
+	context 'CSV' do
+		it 'save into a csv file' do
+			students = [student]
+			csv = double 
+			expect(csv).to receive(:<<).with(save_to_csv_format(students))
+			expect(CSV).to receive(:open).with('student.csv', 'wb').and_yield(csv)
+			save_to_file(students)
+		end
+		it 'load from a csv file' do 
+			filename = "student.csv"
+			row = save_to_csv_format(student)
+			expect(CSV).to receive(:foreach).with("student.csv").and_yield(row)
+			read_the_file
+		end
+	end
+
+
 end
