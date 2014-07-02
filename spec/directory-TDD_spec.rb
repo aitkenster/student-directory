@@ -157,12 +157,16 @@ describe 'student directory' do
 
 	context 'CSV' do
 		it 'save into a csv file' do
+			filename = "student.csv"
 			students = [student]
 			csv = double 
-			expect(csv).to receive(:<<).with(save_to_csv_format(students))
-			expect(CSV).to receive(:open).with('student.csv', 'wb').and_yield(csv)
-			save_to_file(students)
+			expect(csv).to receive(:<<).with(save_to_csv_format(student))
+			expect(students).to receive(:each).and_yield(student)
+			expect(CSV).to receive(:open).with(filename, 'wb').and_yield(csv)
+
+			save_to_file(students, filename)
 		end
+
 		it 'load from a csv file' do 
 			filename = "student.csv"
 			row = [student]

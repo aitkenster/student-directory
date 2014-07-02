@@ -50,7 +50,7 @@ end
 
 
 
-#user iut methods
+#user input methods
 
 def take_user_input
 	gets.chomp
@@ -142,13 +142,12 @@ def save_to_csv_format(student)
 	student.values
 end
 
-def save_to_file(filename = "student.csv")
+def save_to_file(students, filename = "student.csv")
 	CSV.open(filename, 'wb') do |csv|
 		students.each do |student|
-		csv << save_to_csv_format(student)
+			csv << save_to_csv_format(student)
+		end
 	end
-	end
-	puts "hello"
 end
 
 def read_the_file(filename = "student.csv")
@@ -156,8 +155,11 @@ def read_the_file(filename = "student.csv")
 		update_student_array(row[0], row[1], row[2])
 	end
 end
+=begin
 
 
 interactive_menu
 print_on_exit
-#irset_default_cohort_value("")
+
+irset_default_cohort_value("")
+=end
