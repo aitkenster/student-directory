@@ -35,14 +35,14 @@ describe 'student directory' do
 			expect(self).to receive(:puts).with(footer)
 			print_footer
 		end
-		
+=begin
 		it 'prints out n students in the array after n students are inputted' do
 			expect(self).to receive(:puts).with("Now we have 1 great student")
 			expect(self).to receive(:puts).with("Now we have 2 great students")
 			update_student_array("Nicola", "June", "UK")
 			update_student_array("Jeremy", "June", "UK")	
 		end	
-
+=end
 
 		it 'prints out a list of all students information' do
 			update_student_array("Jeremy", "june", "UK")
@@ -152,6 +152,7 @@ describe 'student directory' do
 			expect(self).to receive(:exit)
 			process(selection)
 		end
+
 	end
 
 	context 'CSV' do
@@ -164,11 +165,14 @@ describe 'student directory' do
 		end
 		it 'load from a csv file' do 
 			filename = "student.csv"
-			row = save_to_csv_format(student)
+			row = [student]
+			expect(self).to receive(:update_student_array).with(row[0], row[1], row[2])
 			expect(CSV).to receive(:foreach).with("student.csv").and_yield(row)
 			read_the_file
 		end
 	end
+
+
 
 
 end
