@@ -6,6 +6,8 @@ describe 'student directory' do
 			allow(self).to receive(:puts)
 		end
 
+		let (:student) {{name: "Nicola", cohort: "June", nationality: "UK"}}
+
 	context 'prints out required text' do 
 		it 'prints header' do
 			header = "The students of my cohort at Makers Academy\n============"
@@ -33,14 +35,14 @@ describe 'student directory' do
 			expect(self).to receive(:puts).with(footer)
 			print_footer
 		end
-		
+=begin
 		it 'prints out n students in the array after n students are inputted' do
 			expect(self).to receive(:puts).with("Now we have 1 great student")
 			expect(self).to receive(:puts).with("Now we have 2 great students")
 			update_student_array("Nicola", "June", "UK")
 			update_student_array("Jeremy", "June", "UK")	
 		end	
-
+=end
 
 		it 'prints out a list of all students information' do
 			update_student_array("Jeremy", "june", "UK")
@@ -133,4 +135,48 @@ describe 'student directory' do
 			expect(count_students).to eq(2)
 		end
 	end
+
+	context 'case selection' do
+		it 'select 1' do
+			selection = '1'
+			expect(self).to receive(:input_students)
+			process(selection)
+		end
+		it 'select 2' do
+			selection = '2'
+			expect(self).to receive(:print_on_exit)
+			process(selection)
+		end
+		it 'select 9' do
+			selection = '9'
+			expect(self).to receive(:exit)
+			process(selection)
+		end
+
+	end
+
+	context 'CSV' do
+		it 'save into a csv file' do
+			filename = "student.csv"
+			students = [student]
+			csv = double 
+			expect(csv).to receive(:<<).with(save_to_csv_format(student))
+			expect(students).to receive(:each).and_yield(student)
+			expect(CSV).to receive(:open).with(filename, 'wb').and_yield(csv)
+
+			save_to_file(students, filename)
+		end
+
+		it 'load from a csv file' do 
+			filename = "student.csv"
+			row = [student]
+			expect(self).to receive(:update_student_array).with(row[0], row[1], row[2])
+			expect(CSV).to receive(:foreach).with("student.csv").and_yield(row)
+			read_the_file
+		end
+	end
+
+
+
+
 end

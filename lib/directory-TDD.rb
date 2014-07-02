@@ -1,3 +1,5 @@
+require 'CSV'
+
 #printing method
 def print_header
 	 puts("The students of my cohort at Makers Academy\n============")
@@ -73,22 +75,17 @@ end
 def input_students
 	print_req_for_student_name
 	name = take_user_input
-	
 	while !name.empty? do
 		ask_for_cohort
-		cohort = take_user_input
+			cohort = take_user_input
 		ask_for_nationality
-		nationality = take_user_input
+			nationality = take_user_input
 		print_req_for_student_name
-
 		update_student_array(name, cohort, nationality)
 		print_req_for_student_name
-		name = take_user_input
-
+			name = take_user_input
 	end	
-
 	print_on_exit
-
 end
 
 # save input into the stuent array
@@ -96,7 +93,8 @@ end
 
 def update_student_array(name, cohort = "june", nationality)
 	students << save_student_name_to_hash(name, cohort, nationality)
-	print_update_status
+#	print_update_status
+	print_students
 end
 
 def set_default_cohort_value(cohort)
@@ -109,9 +107,59 @@ def save_student_name_to_hash(name, cohort, nationality)
 	{:name => name, :cohort => cohort_value, :nationality => nationality}
 end
 
+def process(selection)
+	
+	case selection
+	when '1'
+		input_students
+	when '2'
+		print_on_exit
+	when '3'
+		save_to_file
+	when '4'
+		read_the_file
+	when '9'
+		exit
+	end
+end
+
+def interactive_menu
+	loop do
+		print_menu
+		process(selection = take_user_input)
+	end
+end
+
+def print_menu
+	puts "1. Add a student"
+	puts "2. Show all the students"
+	puts "3. Save the students"
+	puts "4. Load the student from a file"
+	puts "9. EXIT"
+end
+
+def save_to_csv_format(student)
+	student.values
+end
+
+def save_to_file(students, filename = "student.csv")
+	CSV.open(filename, 'wb') do |csv|
+		students.each do |student|
+			csv << save_to_csv_format(student)
+		end
+	end
+end
+
+def read_the_file(filename = "student.csv")
+	CSV.foreach(filename) do |row|
+		update_student_array(row[0], row[1], row[2])
+	end
+end
+=begin
 
 
+interactive_menu
+print_on_exit
 
-
-#input_students
-#irset_default_cohort_value("")
+irset_default_cohort_value("")
+=end
