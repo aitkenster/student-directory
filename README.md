@@ -21,6 +21,27 @@ It has the following features:
 + Ruby
 + RSPEC
 
+### How to set it up
+```sh
+git clone git@github.com:aitkenster/student-directory.git
+```
+
+### How to run it
+```sh
+cd student-directory
+ruby ./lib/directory-TDD.rb
+```
+
+open your browser and go to [localhost:3000](http://localhost:3000)
+
+### How to test it
+```sh
+cd student-directory
+rspec
+``` 
+
+
 ### Future Improvements
 
-If I was to spend some more time on the project, I would implement a student class, and split the directoy-TDD.rb file into smaller componenets, so it would be more readable.
++ Implement a student class
++ Split the directoy-TDD.rb file into smaller componenets, so it would be more readable.
