@@ -1,15 +1,15 @@
-student-directory
+Student Directory
 =================
 
-This was our first project during weeks 1 and 2 of Makers Academy. Pairing with a mix of other students on the course, I created an interactive directory which could hold information about all of the students on the course. 
+This was our first project during weeks 1 and 2 of Makers Academy. Pairing with other students, I created an interactive directory which could hold information about all of the Makers Academy students. 
 
-It has the following features:
+###Specification
 
-+ List of all students
++ Lists of all students
 + Ordered by name
 + Grouped by cohort (as an exercise)
 + Adds new students by asking the user to input the names
-+ Show information about a given student
++ Shows information about a given student
 + Add information related to a particular student (e.g. hobbies)
 + Has an interactive menu to ask the user what he or she would like to do
 + Displays information about the number of records in the directory
@@ -31,8 +31,6 @@ git clone git@github.com:aitkenster/student-directory.git
 cd student-directory
 ruby ./lib/directory-TDD.rb
 ```
-
-open your browser and go to [localhost:3000](http://localhost:3000)
 
 ### How to test it
 ```sh
